@@ -26,6 +26,11 @@ public class ConfiguracoesSeguranca {
     @Bean
     public SecurityFilterChain filtrosSeguranca(HttpSecurity http) throws Exception {
         return http
+                .authorizeHttpRequests(
+                        req -> {
+                            req.requestMatchers("/login","/atualizar-token").permitAll();
+                            req.anyRequest().authenticated();
+                        })
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(AbstractHttpConfigurer::disable)
                 .addFilterBefore(filtroTokenAcesso, UsernamePasswordAuthenticationFilter.class)
