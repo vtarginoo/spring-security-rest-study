@@ -2,6 +2,7 @@ package br.com.forum_hub.domain.resposta;
 
 import br.com.forum_hub.domain.topico.Status;
 import br.com.forum_hub.domain.topico.TopicoService;
+import br.com.forum_hub.domain.usuario.Usuario;
 import br.com.forum_hub.infra.exception.RegraDeNegocioException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class RespostaService {
 
         topico.incrementarRespostas();
 
-        var resposta = new Resposta(dados, topico);
+        var resposta = new Resposta(dados, topico, topico.getAutor());
         return repository.save(resposta);
     }
 
